@@ -13,8 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/excel', [\App\Http\Controllers\ExcelController::class, 'index']);
+Route::get('/', [\App\Http\Controllers\ExcelController::class, 'upload']);
+Route::post('/excel', [\App\Http\Controllers\ExcelController::class, 'handle']);
