@@ -70,7 +70,7 @@ class ExcelController extends Controller
         }
 
         $writer = new Xls($spreadsheet);
-        $file = 'data/2.xls';
+        $file = 'data/1.xls';
         $writer->save($file);
 
         $name = trim($info['ma_lop']) . "_" . trim($info['hoc_phan']);
