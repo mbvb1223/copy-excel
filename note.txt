@@ -1,0 +1,10 @@
+1. Các file:
+- file DSLHP7-9-2023 là file tải từ hệ thống về
+- File Mau-Khien lam là file mẫu tạo ra để tạo danh sách bảng điểm。
+2. Yêu cầu:
+- Từ dữ liệu file DSLHP7-9-2023 , copy các nội dung: "Học phần, mã lớp học phần, Số tín chỉ, thứ-tiết, giảng đường"; Và copy các nội dung bên dưới là "STT, mã SV, Hò và tên, Ngày sinh, lớp, ghi chú" sang các nội dung tương ứng bên file Mau-Khien lam.
+- Lưu tên file là: Mã lớp họp phần + học phần. ví dụ "PES1050 2 Tackwondo 1". File nguồn có thể đặt tên tùy thích k cần quan tâm
+- Định dạng file mới, các phần copy sang là phone chữ 12,Times New Roman
+3. Chú ý
+- File mới exel (Mau-Khien lam) phải căn chỉnh sau cho vừa đúng 1 trang in. Vì máy ở cơ quan anh mở ra thì đúng 1 trang in, nhưng về mở bằng máy laptop thì lại lòi ra 1 cột.
+- Chú ý chỗ trọng số các điểm thành phần phải làm để giảng viên nhập trọng số vào, nhập điểm dưới các cột điểm là nó ra chuẩn như vậy.
