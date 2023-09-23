@@ -17,7 +17,7 @@ set('repository', 'git@github.com:mbvb1223/copy-excel.git');
 
 host('52.221.129.246')
     ->set('remote_user', 'ubuntu')
-    ->set('branch', 'master`')
+    ->set('branch', 'master')
     ->set('identity_file', '../khienlien1223.pem')
     ->set('deploy_path', '~/{{application}}');
 
