@@ -21,3 +21,15 @@ host('52.221.129.246')
     ->set('identity_file', '../khienlien1223.pem')
     ->set('deploy_path', '~/{{application}}');
 
+desc('Deploys your project');
+task('deploy', [
+    'deploy:prepare',
+    'deploy:vendors',
+    'artisan:storage:link',
+    'artisan:config:cache',
+//    'artisan:route:cache',
+    'artisan:view:cache',
+    'artisan:event:cache',
+//    'artisan:migrate',
+    'deploy:publish',
+]);
