@@ -52,7 +52,7 @@ class ExcelController extends Controller
             });
 
         $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader("Xls");
-        $reader->setLoadSheetsOnly(["1"]);
+        $reader->setLoadSheetsOnly(["Sheet 1"]);
         $spreadsheet = $reader->load(public_path('/data/example.xls'));
         $spreadsheet->getActiveSheet()->setCellValue('C6', $info['hoc_phan']);
         $spreadsheet->getActiveSheet()->setCellValue('J6', $info['ma_lop']);
@@ -73,7 +73,7 @@ class ExcelController extends Controller
         $file = 'data/1.xls';
         $writer->save($file);
 
-        $name = trim($this->vn_to_str($info['ma_lop'])) . "__" . trim($this->vn_to_str($info['hoc_phan']));
+        $name = $info['ma_lop'] . " " . $info['hoc_phan'];
         $name = str_replace("\u{A0}", "", $name);
         return response()->download($file, "$name.xls");
     }
