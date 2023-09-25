@@ -16,7 +16,19 @@ class ExcelController extends Controller
 
     public function handle(Request $request)
     {
-        $crawler = new Crawler($request['file']->get());
+        $path = $this->exe($request['file']->get());
+
+        return response()->download($path)->deleteFileAfterSend();
+    }
+
+    public function bulkHandle(Request $request)
+    {
+
+    }
+
+    public function exe($file)
+    {
+        $crawler = new Crawler($file);
         $info = [];
         $list = [];
         $crawler
@@ -60,7 +72,8 @@ class ExcelController extends Controller
         $spreadsheet->getActiveSheet()->setCellValue('E7', $info['giang_duong']);
         $spreadsheet->getActiveSheet()->setCellValue('J7', $info['tin_chi']);
         $row = 28;
-        foreach ($list as $student) {
+        foreach ($list as $key => $student) {
+            $spreadsheet->getActiveSheet()->setCellValue("A$row", $key + 1);
             $spreadsheet->getActiveSheet()->setCellValue("B$row", $student[1]);
             $spreadsheet->getActiveSheet()->setCellValue("C$row", $student[2]);
             $spreadsheet->getActiveSheet()->setCellValue("D$row", $student[3]);
@@ -70,12 +83,13 @@ class ExcelController extends Controller
         }
 
         $writer = new Xls($spreadsheet);
-        $path = storage_path('result.xlsx');
-        $writer->save($path);
 
         $name = $info['ma_lop'] . " " . $info['hoc_phan'];
         $name = str_replace("\u{A0}", "", $name);
-        return response()->download($path, "$name.xls")->deleteFileAfterSend();
+        $path = storage_path("excel/$name.xls");
+        $writer->save($path);
+
+        return $path;
     }
 
     function vn_to_str($str)
