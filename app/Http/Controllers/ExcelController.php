@@ -70,12 +70,12 @@ class ExcelController extends Controller
         }
 
         $writer = new Xls($spreadsheet);
-        $file = 'data/1.xls';
-        $writer->save($file);
+        $path = storage_path('result.xlsx');
+        $writer->save($path);
 
         $name = $info['ma_lop'] . " " . $info['hoc_phan'];
         $name = str_replace("\u{A0}", "", $name);
-        return response()->download($file, "$name.xls");
+        return response()->download($path, "$name.xls")->deleteFileAfterSend();
     }
 
     function vn_to_str($str)
