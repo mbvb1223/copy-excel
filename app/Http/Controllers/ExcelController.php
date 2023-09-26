@@ -123,7 +123,7 @@ class ExcelController extends Controller
         $spreadsheet->getActiveSheet()->setCellValue('J7', $info['tin_chi']);
         $row = 28;
         foreach ($list as $key => $student) {
-            $spreadsheet->getActiveSheet()->setCellValue("A$row", $key + 1);
+            $spreadsheet->getActiveSheet()->setCellValue("A$row", $key);
             $spreadsheet->getActiveSheet()->setCellValue("B$row", $student[1]);
             $spreadsheet->getActiveSheet()->setCellValue("C$row", $student[2]);
             $spreadsheet->getActiveSheet()->setCellValue("D$row", $student[3]);
