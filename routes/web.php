@@ -13,5 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\ExcelController::class, 'upload']);
-Route::post('/excel', [\App\Http\Controllers\ExcelController::class, 'handle']);
+Route::get('/', [\App\Http\Controllers\ExcelController::class, 'index']);
+Route::get('/bang-diem-xls', [\App\Http\Controllers\ExcelController::class, 'upload']);
+Route::get('/bang-diem-zip', [\App\Http\Controllers\ExcelController::class, 'uploadZip']);
+Route::post('/handle-bang-diem-xls', [\App\Http\Controllers\ExcelController::class, 'handle']);
+Route::post('/handle-hang-diem-zip', [\App\Http\Controllers\ExcelController::class, 'handleZip']);
