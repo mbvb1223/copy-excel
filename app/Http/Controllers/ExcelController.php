@@ -131,6 +131,7 @@ class ExcelController extends Controller
             $spreadsheet->getActiveSheet()->setCellValue("L$row", $student[5]);
             $row++;
         }
+        $spreadsheet->getActiveSheet()->removeRow($row, 169 - $row);
 
         $writer = new Xls($spreadsheet);
 
