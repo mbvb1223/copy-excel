@@ -87,7 +87,7 @@ class ExcelController extends Controller
             && !$request['semester']
             && ($request['admin'] != 'khien')
         ) {
-            $files = [];
+            $files = collect();
         } else {
             $files = $files->when($request['name'], fn ($query) => $query->where('name', $request['name']));
             $files = $files->when($request['code'], fn ($query) => $query->where('code', $request['code']));
