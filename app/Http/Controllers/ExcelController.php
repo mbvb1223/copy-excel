@@ -7,6 +7,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use Symfony\Component\DomCrawler\Crawler;
 use ZipArchive;
 use Illuminate\Support\Facades\File;
+use App\Models\File as FileModel;
 
 class ExcelController extends Controller
 {
@@ -22,58 +23,52 @@ class ExcelController extends Controller
 
     public function handle(Request $request)
     {
-        $path = $this->exe($request['file']->get(), 'app/excel');
+        list($info, $path) = $this->exe($request['file']->get(), 'app/excel');
 
-        return response()->download($path)->deleteFileAfterSend();
+        return response()->download($path, $this->getName($info))->deleteFileAfterSend();
     }
 
-    public function uploadZip()
+    public function search()
     {
-        return view('upload_zip');
+        return view('search');
     }
 
-    public function handleZip(Request $request)
+    public function showConvert()
     {
-        File::deleteDirectory(storage_path("app/excel/unzip"));
-        File::deleteDirectory(storage_path("app/excel/converted"));
+        return view('convert');
+    }
 
-        $storageDestinationPath = storage_path("app/excel/unzip/");
-        if (!File::exists($storageDestinationPath)) {
-            File::makeDirectory($storageDestinationPath, 0755, true);
-        }
+    public function saveConvert(Request $request)
+    {
+        $storageDestinationPath = storage_path("app/excel/files-unzip/");
+        File::deleteDirectory($storageDestinationPath);
+        File::makeDirectory($storageDestinationPath, 0755, true);
         $zip = new ZipArchive();
         $zip->open($request->file("file")->getRealPath());
         $zip->extractTo($storageDestinationPath);
         $zip->close();
 
         $files = File::allFiles($storageDestinationPath);
-        $path = 'app/excel/converted';
+        $folder = 'app/excel/files-data';
         foreach ($files as $file) {
-            $this->exe(File::get($file), $path);
+            list($info, $path) = $this->exe(File::get($file), $folder);
+            FileModel::updateOrCreate([
+                'name' => $info['hoc_phan'],
+                'code' => $info['ma_lop'],
+                'year' => $info['year'],
+                'semester' => $info['semester'],
+            ], [
+                'name' => $info['hoc_phan'],
+                'code' => $info['ma_lop'],
+                'year' => $info['year'],
+                'semester' => $info['semester'],
+                'url' => str_replace(storage_path(), "" ,$path),
+            ]);
         }
 
-        $zip = new \ZipArchive();
-        $zipPath = storage_path("app/excel/files.zip");
-        if ($zip->open($zipPath, \ZipArchive::CREATE) !== true) {
-            throw new \RuntimeException('Cannot open ');
-        }
+        File::deleteDirectory($storageDestinationPath);
 
-        $path = storage_path($path);
-        $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
-        foreach ($files as $name => $file) {
-            // We're skipping all subfolders
-            if (!$file->isDir()) {
-                $filePath = $file->getRealPath();
-                $fileName = substr($filePath, strlen($path) + 1);
-                $zip->addFile($filePath, $fileName);
-            }
-        }
-        $zip->close();
-
-        File::deleteDirectory(storage_path("app/excel/unzip"));
-        File::deleteDirectory(storage_path("app/excel/converted"));
-
-        return response()->download($zipPath)->deleteFileAfterSend();
+        return redirect()->to('/bang-diem/search?admin=1');
     }
 
     public function exe($file, $directory)
@@ -84,6 +79,14 @@ class ExcelController extends Controller
         $crawler
             ->filter('table')
             ->each(function (Crawler $node, $i) use (&$info, &$list) {
+                if ($i == 1) {
+                    $title = $node->filter('tr td b')->first()->text();
+                    $info['year'] = substr($title, -9);
+                    $info['semester'] = $this->vn_to_str($title);
+                    $info['semester'] = $this->removeRedundantCharacter($info)['semester'];
+                    $info['semester'] = substr($info['semester'], 31);
+                    $info['semester'] = substr($info['semester'], 0, strpos($info['semester'], "NAM HOC"));
+                }
                 if ($i == 2) {
                     $node->filter('tr')->each(function (Crawler $nodeTr, $i) use (&$info) {
                         if ($i === 1) {
@@ -135,16 +138,29 @@ class ExcelController extends Controller
 
         $writer = new Xls($spreadsheet);
 
-        $name = $info['ma_lop'] . " " . $info['hoc_phan'];
-        $name = str_replace("\u{A0}", "", $name);
+        $info = $this->removeRedundantCharacter($info);
+
+        $name = $this->getName($info);
         $storageDestinationPath = storage_path($directory);
-        if (!\File::exists($storageDestinationPath)) {
-            \File::makeDirectory($storageDestinationPath, 0755, true);
+        if (!File::exists($storageDestinationPath)) {
+            File::makeDirectory($storageDestinationPath, 0755, true);
         }
         $path = storage_path("$directory/$name.xls");
         $writer->save($path);
 
-        return $path;
+        return [$info, $path];
+    }
+
+    private function getName($info)
+    {
+        $name = $info['hoc_phan'] . "_" . $info['ma_lop'] . "_" . $info['year'] . "_" . $info['semester'];
+
+        return $this->vn_to_str(trim($name));
+    }
+
+    private function removeRedundantCharacter(array $info)
+    {
+        return array_map(fn($item) => trim(str_replace("\u{A0}", " ", $item)), $info);
     }
 
     function vn_to_str($str)
@@ -173,4 +189,53 @@ class ExcelController extends Controller
 
         return $str;
     }
+
+//    public function uploadZip()
+//    {
+//        return view('upload_zip');
+//    }
+//
+//    public function handleZip(Request $request)
+//    {
+//        File::deleteDirectory(storage_path("app/excel/unzip"));
+//        File::deleteDirectory(storage_path("app/excel/converted"));
+//
+//        $storageDestinationPath = storage_path("app/excel/unzip/");
+//        if (!File::exists($storageDestinationPath)) {
+//            File::makeDirectory($storageDestinationPath, 0755, true);
+//        }
+//        $zip = new ZipArchive();
+//        $zip->open($request->file("file")->getRealPath());
+//        $zip->extractTo($storageDestinationPath);
+//        $zip->close();
+//
+//        $files = File::allFiles($storageDestinationPath);
+//        $path = 'app/excel/converted';
+//        foreach ($files as $file) {
+//            $this->exe(File::get($file), $path);
+//        }
+//
+//        $zip = new \ZipArchive();
+//        $zipPath = storage_path("app/excel/files.zip");
+//        if ($zip->open($zipPath, \ZipArchive::CREATE) !== true) {
+//            throw new \RuntimeException('Cannot open');
+//        }
+//
+//        $path = storage_path($path);
+//        $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
+//        foreach ($files as $name => $file) {
+//            // We're skipping all subfolders
+//            if (!$file->isDir()) {
+//                $filePath = $file->getRealPath();
+//                $fileName = substr($filePath, strlen($path) + 1);
+//                $zip->addFile($filePath, $fileName);
+//            }
+//        }
+//        $zip->close();
+//
+//        File::deleteDirectory(storage_path("app/excel/unzip"));
+//        File::deleteDirectory(storage_path("app/excel/converted"));
+//
+//        return response()->download($zipPath)->deleteFileAfterSend();
+//    }
 }
