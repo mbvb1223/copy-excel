@@ -30,6 +30,6 @@ task('deploy', [
 //    'artisan:route:cache',
     'artisan:view:cache',
     'artisan:event:cache',
-//    'artisan:migrate',
+    'artisan:migrate',
     'deploy:publish',
 ]);

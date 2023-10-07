@@ -20,7 +20,7 @@ Route::post('/handle-bang-diem-xls', [\App\Http\Controllers\ExcelController::cla
 //Route::post('/handle-hang-diem-zip', [\App\Http\Controllers\ExcelController::class, 'handleZip']);
 
 
-Route::get('/bang-diem/convert', [\App\Http\Controllers\ExcelController::class, 'showConvert']);
+Route::get('/bang-diem/76d8d7d21619839d64584f264db3674e7472648b', [\App\Http\Controllers\ExcelController::class, 'showConvert']);
 Route::post('/bang-diem/save', [\App\Http\Controllers\ExcelController::class, 'saveConvert']);
 
 Route::get('/bang-diem/search', [\App\Http\Controllers\ExcelController::class, 'search']);
