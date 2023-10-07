@@ -24,5 +24,6 @@ Route::get('/bang-diem/convert', [\App\Http\Controllers\ExcelController::class, 
 Route::post('/bang-diem/save', [\App\Http\Controllers\ExcelController::class, 'saveConvert']);
 
 Route::get('/bang-diem/search', [\App\Http\Controllers\ExcelController::class, 'search']);
+Route::get('/bang-diem/download/{file}', [\App\Http\Controllers\ExcelController::class, 'download']);
 //Route::post('/bang-diem/admin', [\App\Http\Controllers\ExcelController::class, 'handleZip']);
 

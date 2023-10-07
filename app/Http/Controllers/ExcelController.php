@@ -28,11 +28,6 @@ class ExcelController extends Controller
         return response()->download($path, $this->getName($info))->deleteFileAfterSend();
     }
 
-    public function search()
-    {
-        return view('search');
-    }
-
     public function showConvert()
     {
         return view('convert');
@@ -69,6 +64,31 @@ class ExcelController extends Controller
         File::deleteDirectory($storageDestinationPath);
 
         return redirect()->to('/bang-diem/search?admin=1');
+    }
+
+    public function search(Request $request)
+    {
+        $files = FileModel::all();
+        $names = $files->pluck('name')->unique()->all();
+        $codes = $files->pluck('code')->unique()->all();
+        $years = $files->pluck('year')->unique()->all();
+        $semesters = $files->pluck('semester')->unique()->all();
+
+        if (!$request['name']
+            && !$request['code']
+            && !$request['year']
+            && !$request['semester']
+            && ($request['admin'] != 'khien')
+        ) {
+            $files = [];
+        } else {
+            $files = $files->when($request['name'], fn ($query) => $query->where('name', $request['name']));
+            $files = $files->when($request['code'], fn ($query) => $query->where('code', $request['code']));
+            $files = $files->when($request['year'], fn ($query) => $query->where('year', $request['year']));
+            $files = $files->when($request['semester'], fn ($query) => $query->where('semester', $request['semester']));
+        }
+
+        return view('search', compact('names', 'codes', 'years', 'semesters', 'files'));
     }
 
     public function exe($file, $directory)
@@ -149,6 +169,11 @@ class ExcelController extends Controller
         $writer->save($path);
 
         return [$info, $path];
+    }
+
+    public function download(FileModel $file)
+    {
+        return response()->download(storage_path($file->url), $file->code . " " . $file->name);
     }
 
     private function getName($info)
