@@ -1,8 +1,10 @@
 @extends('layout')
 
 @section('content')
+    <h2 class="text-center w-100 mb-5">Tìm kiếm bảng điểm</h2>
     <form action="{{ url()->current() }}" method="GET" style="width: 100%">
         @csrf
+        <input type="hidden" name="admin" value="{{ request('admin') }}">
         <div class="form-row col-12">
             <div class="form-group col-md-6">
                 <label for="tmh">Học phần (tên môn học)</label>
@@ -63,6 +65,7 @@
         </tr>
         </thead>
         <tbody>
+            @if(!$files->all()) <tr><td colspan="5" class="text-center">Không tìm thấy kết quả phù hợp</td></tr> @endif
             @foreach($files as $file)
                 <tr>
                     <th scope="row">{{ $loop->index + 1 }}</th>
@@ -73,9 +76,14 @@
                         <a href="/bang-diem/download/{{$file->id}}">
                         <button type="button" class="btn btn-info">Tải về</button>
                         </a>
-                        <a href="/bang-diem/delete/{{$file->id}}">
+                        @if(request('admin') == 'khien')
+                        <a href="/bang-diem/delete/{{$file->id}}" onclick="
+                        if (!confirm('Are you sure?')) {
+                            return false;
+                        }">
                             <button type="button" class="btn btn-danger">Xoá</button>
                         </a>
+                        @endif
                     </td>
                 </tr>
             @endforeach

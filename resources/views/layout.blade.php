@@ -36,9 +36,11 @@
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">Tools</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="/bang-diem-xls">Bảng điểm xls</a>
-                    <a class="dropdown-item" href="/bang-diem-zip">Bảng điểm zip</a>
+                    <a class="dropdown-item" href="/bang-diem-xls">Chuyển đổ bảng điểm xls</a>
                 </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/bang-diem/search">Bảng điểm </a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
@@ -53,14 +55,14 @@
     <div style="padding-top: 3.5rem;">
         <div class="container">
             <!-- Example row of columns -->
-            <div class="row" style="margin: 50px">
+            <div class="row">
                 @yield('content')
             </div>
         </div>
     </div>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
+    <div class="jumbotron mt-5">
 
         <div class="container">
             <h1 class="display-3">Hello, world!</h1>

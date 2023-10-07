@@ -63,7 +63,7 @@ class ExcelController extends Controller
 
         File::deleteDirectory($storageDestinationPath);
 
-        return redirect()->to('/bang-diem/search?admin=1');
+        return redirect()->to('/bang-diem/search?admin=khien');
     }
 
     public function search(Request $request)
@@ -73,6 +73,13 @@ class ExcelController extends Controller
         $codes = $files->pluck('code')->unique()->all();
         $years = $files->pluck('year')->unique()->all();
         $semesters = $files->pluck('semester')->unique()->all();
+
+        if (!$request['name'] && $request['admin'] != 'khien') {
+            $request['name'] = $names[0] ?? null;
+        }
+        if (!$request['code'] && $request['admin'] != 'khien') {
+            $request['code'] = $codes[0] ?? null;
+        }
 
         if (!$request['name']
             && !$request['code']
@@ -174,6 +181,13 @@ class ExcelController extends Controller
     public function download(FileModel $file)
     {
         return response()->download(storage_path($file->url), $file->code . " " . $file->name);
+    }
+
+    public function delete(FileModel $file)
+    {
+        File::delete(storage_path($file->url));
+        $file->delete();
+        return redirect()->back();
     }
 
     private function getName($info)
