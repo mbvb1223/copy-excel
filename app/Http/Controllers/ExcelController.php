@@ -25,7 +25,7 @@ class ExcelController extends Controller
     {
         list($info, $path) = $this->exe($request['file']->get(), 'app/excel');
 
-        return response()->download($path, $this->getName($info))->deleteFileAfterSend();
+        return response()->download($path, $info['ma_lop'] . " " . $info['hoc_phan']. ".xls")->deleteFileAfterSend();
     }
 
     public function showConvert()
@@ -145,6 +145,7 @@ class ExcelController extends Controller
 
         $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader("Xls");
         $reader->setLoadSheetsOnly(["Sheet 1"]);
+
         $spreadsheet = $reader->load(public_path('/data/example.xls'));
         $spreadsheet->getActiveSheet()->setCellValue('C6', $info['hoc_phan']);
         $spreadsheet->getActiveSheet()->setCellValue('J6', $info['ma_lop']);
@@ -180,7 +181,7 @@ class ExcelController extends Controller
 
     public function download(FileModel $file)
     {
-        return response()->download(storage_path($file->url), $file->code . " " . $file->name);
+        return response()->download(storage_path($file->url), $file->code . " " . $file->name . ".xls");
     }
 
     public function delete(FileModel $file)
