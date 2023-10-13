@@ -10,4 +10,9 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
+    <hr>
+    <a href="{{ route('download_files') }}">
+        <button type="submit" class="btn btn-success">Download all files</button>
+    </a>
+
 @endsection

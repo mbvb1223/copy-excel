@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use Symfony\Component\DomCrawler\Crawler;
@@ -25,7 +26,7 @@ class ExcelController extends Controller
     {
         list($info, $path) = $this->exe($request['file']->get(), 'app/excel');
 
-        return response()->download($path, $info['ma_lop'] . " " . $info['hoc_phan']. ".xls")->deleteFileAfterSend();
+        return response()->download($path, $info['ma_lop'] . " " . $info['hoc_phan'] . ".xls")->deleteFileAfterSend();
     }
 
     public function showConvert()
@@ -57,7 +58,7 @@ class ExcelController extends Controller
                 'code' => $info['ma_lop'],
                 'year' => $info['year'],
                 'semester' => $info['semester'],
-                'url' => str_replace(storage_path(), "" ,$path),
+                'url' => str_replace(storage_path(), "", $path),
             ]);
         }
 
@@ -89,10 +90,10 @@ class ExcelController extends Controller
         ) {
             $files = collect();
         } else {
-            $files = $files->when($request['name'], fn ($query) => $query->where('name', $request['name']));
-            $files = $files->when($request['code'], fn ($query) => $query->where('code', $request['code']));
-            $files = $files->when($request['year'], fn ($query) => $query->where('year', $request['year']));
-            $files = $files->when($request['semester'], fn ($query) => $query->where('semester', $request['semester']));
+            $files = $files->when($request['name'], fn($query) => $query->where('name', $request['name']));
+            $files = $files->when($request['code'], fn($query) => $query->where('code', $request['code']));
+            $files = $files->when($request['year'], fn($query) => $query->where('year', $request['year']));
+            $files = $files->when($request['semester'], fn($query) => $query->where('semester', $request['semester']));
         }
 
         return view('search', compact('names', 'codes', 'years', 'semesters', 'files'));
@@ -181,7 +182,39 @@ class ExcelController extends Controller
 
     public function download(FileModel $file)
     {
-        return response()->download(storage_path($file->url), $file->code . " " . $file->name . ".xls");
+        return response()->download(storage_path($file->url), $file->user_file_name);
+    }
+
+    public function downloadAll()
+    {
+        $path = storage_path('app/excel/files-data');
+        $zip = new \ZipArchive();
+        $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
+        $now = Carbon::now()->setTimezone('+7')->format('d-m-Y_H:i:s');
+        $zipPath = storage_path("app/excel/files_$now.zip");
+        if ($zip->open($zipPath, \ZipArchive::CREATE) !== true) {
+            throw new \RuntimeException('Cannot open');
+        }
+        $fileModelsKeyByUrl = FileModel::all()->keyBy('url')->all();
+        /** @var \SplFileInfo $file */
+        foreach ($files as $file) {
+            $fileUrl = "/app/excel/files-data/{$file->getFilename()}";
+
+            if (!$file->isDir()
+                && $file->getExtension() == "xls"
+                && isset($fileModelsKeyByUrl[$fileUrl])
+            ) {
+                /** @var \SplFileInfo $file */
+                $filePath = $file->getRealPath();
+                $zip->addFile(
+                    $filePath,
+                    $fileModelsKeyByUrl[$fileUrl]->user_file_name
+                );
+            }
+        }
+        $zip->close();
+
+        return response()->download($zipPath)->deleteFileAfterSend();
     }
 
     public function delete(FileModel $file)

@@ -25,4 +25,9 @@ class File extends Model
         'semester',
         'url',
     ];
+
+    public function getUserFileNameAttribute()
+    {
+        return $this->code . " " . $this->name . ".xls";
+    }
 }
