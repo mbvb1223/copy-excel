@@ -40,7 +40,7 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/bang-diem/search">Bảng điểm </a>
+                <a class="nav-link" href="/bang-diem/search">Danh sách lớp</a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
