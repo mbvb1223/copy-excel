@@ -69,34 +69,38 @@ class ExcelController extends Controller
 
     public function search(Request $request)
     {
-        $files = FileModel::all();
-        $names = $files->pluck('name')->unique()->all();
-        $codes = $files->pluck('code')->unique()->all();
-        $years = $files->pluck('year')->unique()->all();
-        $semesters = $files->pluck('semester')->unique()->all();
-
-        if (!$request['name'] && $request['admin'] != 'khien') {
-            $request['name'] = $names[0] ?? null;
-        }
-        if (!$request['code'] && $request['admin'] != 'khien') {
-            $request['code'] = $codes[0] ?? null;
-        }
+        $allFiles = FileModel::all();
+        $names = $allFiles->pluck('name')->unique()->all();
+        $codes = $allFiles->pluck('code')->unique()->all();
+        $years = $allFiles->pluck('year')->unique()->all();
+        $semesters = $allFiles->pluck('semester')->unique()->all();
 
         if (!$request['name']
             && !$request['code']
             && !$request['year']
             && !$request['semester']
-            && ($request['admin'] != 'khien')
         ) {
-            $files = collect();
+            if ($request['admin'] && $request['_token']) {
+                $files = $allFiles;
+            } else {
+                $files = collect();
+            }
         } else {
-            $files = $files->when($request['name'], fn($query) => $query->where('name', $request['name']));
-            $files = $files->when($request['code'], fn($query) => $query->where('code', $request['code']));
-            $files = $files->when($request['year'], fn($query) => $query->where('year', $request['year']));
-            $files = $files->when($request['semester'], fn($query) => $query->where('semester', $request['semester']));
+            $files = $allFiles
+                ->when($request['name'], fn($query) => $query->where('name', $request['name']))
+                ->when($request['code'], fn($query) => $query->where('code', $request['code']))
+                ->when($request['year'], fn($query) => $query->where('year', $request['year']))
+                ->when($request['semester'], fn($query) => $query->where('semester', $request['semester']));
         }
 
-        return view('search', compact('names', 'codes', 'years', 'semesters', 'files'));
+        return view('search', compact(
+            'names',
+            'codes',
+            'years',
+            'semesters',
+            'files',
+            'allFiles'
+        ));
     }
 
     public function exe($file, $directory)
