@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-    <h2 class="text-center w-100 mb-5">Tìm kiếm danh sách lớp học phần</h2>
+    <h2 class="text-center w-100 mb-5">DANH SÁCH BẢNG ĐIỂM LỚP HỌC PHẦN</h2>
     <form action="{{ url()->current() }}" method="GET" style="width: 100%">
         @csrf
         <input type="hidden" name="admin" value="{{ request('admin') }}">
@@ -65,7 +65,7 @@
             <th scope="col">#</th>
             <th scope="col">Học phần</th>
             <th scope="col">Mã lớp</th>
-            <th scope="col">Thời gian</th>
+            <th scope="col">Năm học, học kỳ</th>
             <th scope="col">
                 @if($files->all())
                 <a href="/bang-diem/download-filtered?{{ request()->getQueryString() }}">
