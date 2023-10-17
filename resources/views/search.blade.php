@@ -66,7 +66,7 @@
             <th scope="col">Học phần</th>
             <th scope="col">Mã lớp</th>
             <th scope="col">Thời gian</th>
-            <th scope="col">Tải về
+            <th scope="col">
                 @if($files->all())
                 <a href="/bang-diem/download-filtered?{{ request()->getQueryString() }}">
                     <button class="btn btn-warning">
