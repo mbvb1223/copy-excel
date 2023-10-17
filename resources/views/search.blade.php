@@ -33,9 +33,7 @@
             <div class="form-group col-md-6">
                 <label for="tmh">Học phần (tên môn học)</label>
                 <select name="name" id="tmh" class="form-control">
-                    @if(request()->get('admin') == 'khien')
-                        <option value="">#</option>
-                    @endif
+                    <option value="">#</option>
                     @foreach($names as $name)
                         <option value="{{ $name }}" @if(request('name') == $name) selected @endif>{{ $name }}</option>
                     @endforeach
@@ -44,9 +42,6 @@
             <div class="form-group col-md-6">
                 <label for="ml-hp">Mã lớp học phần</label>
                 <select name="code" id="ml-hp" class="form-control">
-{{--                    @if(request()->get('admin') == 'khien')--}}
-{{--                        <option value="">#</option>--}}
-{{--                    @endif--}}
                     <option value="">#</option>
                     @foreach($codes as $code)
                         <option value="{{ $code }}" @if(request('code') == $code) selected @endif>{{ $code }}</option>
