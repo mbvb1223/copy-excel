@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RuntimeException;
+use SplFileInfo;
 use Symfony\Component\DomCrawler\Crawler;
 use ZipArchive;
 use Illuminate\Support\Facades\File;
@@ -75,23 +81,7 @@ class ExcelController extends Controller
         $years = $allFiles->pluck('year')->unique()->all();
         $semesters = $allFiles->pluck('semester')->unique()->all();
 
-        if (!$request['name']
-            && !$request['code']
-            && !$request['year']
-            && !$request['semester']
-        ) {
-            if ($request['admin'] && $request['_token']) {
-                $files = $allFiles;
-            } else {
-                $files = collect();
-            }
-        } else {
-            $files = $allFiles
-                ->when($request['name'], fn($query) => $query->where('name', $request['name']))
-                ->when($request['code'], fn($query) => $query->where('code', $request['code']))
-                ->when($request['year'], fn($query) => $query->where('year', $request['year']))
-                ->when($request['semester'], fn($query) => $query->where('semester', $request['semester']));
-        }
+        $files = $this->getFilteredFiles($request, $allFiles);
 
         return view('search', compact(
             'names',
@@ -148,7 +138,7 @@ class ExcelController extends Controller
                 }
             });
 
-        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader("Xls");
+        $reader = IOFactory::createReader("Xls");
         $reader->setLoadSheetsOnly(["Sheet 1"]);
 
         $spreadsheet = $reader->load(public_path('/data/example.xls'));
@@ -192,15 +182,15 @@ class ExcelController extends Controller
     public function downloadAll()
     {
         $path = storage_path('app/excel/files-data');
-        $zip = new \ZipArchive();
-        $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
+        $zip = new ZipArchive();
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
         $now = Carbon::now()->setTimezone('+7')->format('d-m-Y_H:i:s');
         $zipPath = storage_path("app/excel/files_$now.zip");
-        if ($zip->open($zipPath, \ZipArchive::CREATE) !== true) {
-            throw new \RuntimeException('Cannot open');
+        if ($zip->open($zipPath, ZipArchive::CREATE) !== true) {
+            throw new RuntimeException('Cannot open');
         }
         $fileModelsKeyByUrl = FileModel::all()->keyBy('url')->all();
-        /** @var \SplFileInfo $file */
+        /** @var SplFileInfo $file */
         foreach ($files as $file) {
             $fileUrl = "/app/excel/files-data/{$file->getFilename()}";
 
@@ -208,13 +198,36 @@ class ExcelController extends Controller
                 && $file->getExtension() == "xls"
                 && isset($fileModelsKeyByUrl[$fileUrl])
             ) {
-                /** @var \SplFileInfo $file */
+                /** @var SplFileInfo $file */
                 $filePath = $file->getRealPath();
                 $zip->addFile(
                     $filePath,
                     $fileModelsKeyByUrl[$fileUrl]->user_file_name
                 );
             }
+        }
+        $zip->close();
+
+        return response()->download($zipPath)->deleteFileAfterSend();
+    }
+
+    public function downloadFilteredFiles(Request $request)
+    {
+        $allFiles = FileModel::all();
+        $files = $this->getFilteredFiles($request, $allFiles);
+
+        $zip = new ZipArchive();
+        $now = Carbon::now()->setTimezone('+7')->format('d-m-Y_H:i:s');
+        $zipPath = storage_path("app/excel/files_$now.zip");
+        if ($zip->open($zipPath, ZipArchive::CREATE) !== true) {
+            throw new RuntimeException('Cannot open');
+        }
+        /** @var FileModel $file */
+        foreach ($files as $file) {
+            $zip->addFile(
+                storage_path($file->url),
+                $file->user_file_name
+            );
         }
         $zip->close();
 
@@ -315,4 +328,25 @@ class ExcelController extends Controller
 //
 //        return response()->download($zipPath)->deleteFileAfterSend();
 //    }
+
+    private function getFilteredFiles(Request $request, Collection $allFiles): \Illuminate\Support\Collection
+    {
+        if (!$request['name']
+            && !$request['code']
+            && !$request['year']
+            && !$request['semester']
+        ) {
+            if ($request['admin'] && $request['_token']) {
+                return $allFiles;
+            }
+
+            return collect();
+        }
+
+        return $allFiles
+            ->when($request['name'], fn($query) => $query->where('name', $request['name']))
+            ->when($request['code'], fn($query) => $query->where('code', $request['code']))
+            ->when($request['year'], fn($query) => $query->where('year', $request['year']))
+            ->when($request['semester'], fn($query) => $query->where('semester', $request['semester']));
+    }
 }
