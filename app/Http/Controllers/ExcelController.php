@@ -42,33 +42,28 @@ class ExcelController extends Controller
 
     public function saveConvert(Request $request)
     {
-        $storageDestinationPath = storage_path("app/excel/files-unzip/");
-        File::deleteDirectory($storageDestinationPath);
-        File::makeDirectory($storageDestinationPath, 0755, true);
-        $zip = new ZipArchive();
-        $zip->open($request->file("file")->getRealPath());
-        $zip->extractTo($storageDestinationPath);
-        $zip->close();
-
-        $files = File::allFiles($storageDestinationPath);
         $folder = 'app/excel/files-data';
-        foreach ($files as $file) {
-            list($info, $path) = $this->exe(File::get($file), $folder);
-            FileModel::updateOrCreate([
-                'name' => $info['hoc_phan'],
-                'code' => $info['ma_lop'],
-                'year' => $info['year'],
-                'semester' => $info['semester'],
-            ], [
-                'name' => $info['hoc_phan'],
-                'code' => $info['ma_lop'],
-                'year' => $info['year'],
-                'semester' => $info['semester'],
-                'url' => str_replace(storage_path(), "", $path),
-            ]);
-        }
+        if ($request->file("file")->extension() == "zip") {
+            $storageDestinationPath = storage_path("app/excel/files-unzip/");
+            File::deleteDirectory($storageDestinationPath);
+            File::makeDirectory($storageDestinationPath, 0755, true);
+            $zip = new ZipArchive();
+            $zip->open($request->file("file")->getRealPath());
+            $zip->extractTo($storageDestinationPath);
+            $zip->close();
 
-        File::deleteDirectory($storageDestinationPath);
+            $files = File::allFiles($storageDestinationPath);
+
+            foreach ($files as $file) {
+                list($info, $path) = $this->exe(File::get($file), $folder);
+                $this->updateFile($info, $path);
+            }
+
+            File::deleteDirectory($storageDestinationPath);
+        } else {
+            list($info, $path) = $this->exe(File::get($request->file("file")), $folder);
+            $this->updateFile($info, $path);
+        }
 
         return redirect()->to('/bang-diem/search?admin=khien');
     }
@@ -348,5 +343,21 @@ class ExcelController extends Controller
             ->when($request['code'], fn($query) => $query->where('code', $request['code']))
             ->when($request['year'], fn($query) => $query->where('year', $request['year']))
             ->when($request['semester'], fn($query) => $query->where('semester', $request['semester']));
+    }
+
+    private function updateFile(array $info, string $path): void
+    {
+        FileModel::updateOrCreate([
+            'name' => $info['hoc_phan'],
+            'code' => $info['ma_lop'],
+            'year' => $info['year'],
+            'semester' => $info['semester'],
+        ], [
+            'name' => $info['hoc_phan'],
+            'code' => $info['ma_lop'],
+            'year' => $info['year'],
+            'semester' => $info['semester'],
+            'url' => str_replace(storage_path(), "", $path),
+        ]);
     }
 }

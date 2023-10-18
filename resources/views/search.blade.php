@@ -81,7 +81,7 @@
                     <td>{{ $file->code }}</td>
                     <td>{{ $file->year }}_Học kỳ {{ $file->semester }}</td>
                     <td>
-                        <a href="/bang-diem/download/{{$file->id}}">
+                        <a href="/bang-diem/download/{{$file->id}}?hash={{ Str::random(20) }}">
                         <button type="button" class="btn btn-info">Tải về</button>
                         </a>
                         @if(request('admin') == 'khien')
