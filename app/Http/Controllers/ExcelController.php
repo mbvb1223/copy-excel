@@ -70,7 +70,7 @@ class ExcelController extends Controller
 
     public function search(Request $request)
     {
-        $allFiles = FileModel::all();
+        $allFiles = FileModel::orderBy('name')->orderBy('code')->get();
         $names = $allFiles->pluck('name')->unique()->all();
         $codes = $allFiles->pluck('code')->unique()->all();
         $years = $allFiles->pluck('year')->unique()->all();
@@ -208,7 +208,7 @@ class ExcelController extends Controller
 
     public function downloadFilteredFiles(Request $request)
     {
-        $allFiles = FileModel::all();
+        $allFiles = FileModel::orderBy('name')->orderBy('code')->get();
         $files = $this->getFilteredFiles($request, $allFiles);
 
         $zip = new ZipArchive();
