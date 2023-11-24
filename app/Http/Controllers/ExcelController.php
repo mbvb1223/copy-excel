@@ -206,6 +206,19 @@ class ExcelController extends Controller
         return response()->download($zipPath)->deleteFileAfterSend();
     }
 
+    public function checkCode(Request $request)
+    {
+        $codes = preg_split("/\\r\\n|\\r|\\n/", $request['codes']) ?? [];
+        $codes = array_filter(array_unique($codes));
+        $existedCodes = FileModel::select('code')->get();
+        $result = array_diff(
+            $codes,
+            $existedCodes->pluck('code')->all()
+        );
+        echo "<pre>";
+        print_r($result);
+    }
+
     public function downloadFilteredFiles(Request $request)
     {
         $allFiles = FileModel::orderBy('name')->orderBy('code')->get();

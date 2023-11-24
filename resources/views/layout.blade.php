@@ -55,9 +55,7 @@
     <div style="padding-top: 3.5rem;">
         <div class="container">
             <!-- Example row of columns -->
-            <div class="row">
-                @yield('content')
-            </div>
+            @yield('content')
         </div>
     </div>
 
