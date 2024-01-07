@@ -288,6 +288,67 @@ class ExcelController extends Controller
         return $str;
     }
 
+    public static function convertDanhSachDuThi()
+    {
+        $reader = IOFactory::createReader("Xlsx");
+        $reader->setLoadSheetsOnly(["Sheet 1"]);
+        $reader->setReadDataOnly(true);
+
+        $spreadsheet = $reader->load(public_path('/data/lich_thi.xlsx'));
+        $worksheet = $spreadsheet->getActiveSheet();
+        $rows = $worksheet->rangeToArray("B12:I13", null, true, false, false);
+
+//        echo "<pre>";
+//        print_r($rows);die();
+        foreach ($rows as $key => $value) {
+            if (true) {
+                echo $key . PHP_EOL;
+
+                $data = [];
+                foreach ($value as $iter => $column_value) {
+                    $data[] = $column_value;
+                };
+//                echo "<pre>";
+//                print_r($data);die();
+
+                $reader = IOFactory::createReader("Xls");
+                $reader->setLoadAllSheets();
+//                $reader->setLoadSheetsOnly(["Học phần"]);
+//                $reader->setLoadSheetsOnly(["HP"]);
+                $reader->setLoadSheetsOnly(["Sheet 1"]);
+
+                $spreadsheet = $reader->load(public_path('/data/mau.xls'));
+//                $spreadsheet->getSheet(1)->setCellValue('C7', $data[3]);
+//                $spreadsheet->getSheet(1)->setCellValue('C8', $data[6]);
+//                $spreadsheet->getSheet(1)->setCellValue('C9', $data[2]);
+//                $spreadsheet->getSheet(1)->setCellValue('E8', $data[1]);
+//                $spreadsheet->getSheet(1)->setCellValue('E9', $data[0]);
+//                $spreadsheet->getSheet(1)->setTitle($data[2] . "_" . $data[6]);
+
+
+                $spreadsheet->getActiveSheet()->setCellValue('C7', $data[3]);
+                $spreadsheet->getActiveSheet()->setCellValue('C8', $data[6]);
+                $spreadsheet->getActiveSheet()->setCellValue('C9', $data[2]);
+                $spreadsheet->getActiveSheet()->setCellValue('E8', $data[1]);
+                $spreadsheet->getActiveSheet()->setCellValue('E9', $data[0]);
+                $spreadsheet->getActiveSheet()->setTitle($data[2] . "_" . $data[6]);
+
+                $writer = new Xls($spreadsheet);
+                $data = array_map(fn($item) => trim(str_replace("\u{A0}", " ", $item)), $data);
+
+                $name = str_replace("/", "-", $data[0]) . " " . trim($data[2]) . " " . trim($data[3] . " " . $data[6] . " " . $data[7]);
+
+
+                $storageDestinationPath = storage_path('app/khien2');
+                if (!File::exists($storageDestinationPath)) {
+                    File::makeDirectory($storageDestinationPath, 0755, true);
+                }
+                $path = storage_path("app/khien2/$name.xls");
+                $writer->save($path);
+            }
+        };
+    }
+
 //    public function uploadZip()
 //    {
 //        return view('upload_zip');
