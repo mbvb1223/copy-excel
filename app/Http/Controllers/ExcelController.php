@@ -288,7 +288,7 @@ class ExcelController extends Controller
         return $str;
     }
 
-    public static function convertDanhSachDuThi()
+    public function convertDanhSachDuThi()
     {
         $reader = IOFactory::createReader("Xlsx");
         $reader->setLoadSheetsOnly(["Sheet 1"]);
@@ -298,8 +298,6 @@ class ExcelController extends Controller
         $worksheet = $spreadsheet->getActiveSheet();
         $rows = $worksheet->rangeToArray("B12:I13", null, true, false, false);
 
-//        echo "<pre>";
-//        print_r($rows);die();
         foreach ($rows as $key => $value) {
             if (true) {
                 echo $key . PHP_EOL;
