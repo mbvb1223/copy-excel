@@ -1,0 +1,507 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+		<script type="text/javascript">
+        if(parent.document.getElementById("windowtitle"))
+        {
+            
+            parent.document.getElementById("windowtitle").innerHTML = '<b>In Lớp HP</b>';
+        }else
+        {
+            
+                //document.location.replace("../login/error.asp?ID=12");
+            
+        }
+        </script>
+        <head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	
+	<style>
+	BODY{ border: 0; margin: 0; cursor: default; }
+	</style>
+	
+</head>
+
+
+<!--====================================================================================--->
+<!-- header v footer-->
+
+
+<!--=====Vi?t chn bo co====================-->
+
+<!--====================================================================================--->
+
+
+	
+<table id="tblMain" border="0" width="100%" cellpadding="0" cellspacing="0" style="display:block;" >
+		<tr id="trDonvi1" >
+			<td width="50%" colspan="3" style="font:Time New Roman, Times, serif; color:Black; font-size:12; font-style:Normal; text-align:Center;">ĐẠI&nbsp;HỌC&nbsp;QUỐC&nbsp;GIA&nbsp;HÀ&nbsp;NỘI</td>
+			<td  width="50%" colspan="3" style="font:Time New Roman, Times, serif; color:Black; font-size:12; font-style:Normal; text-align:Center;">CỘNG&nbsp;HÒA&nbsp;XÃ&nbsp;HỘI&nbsp;CHỦ&nbsp;NGHĨA&nbsp;VIỆT&nbsp;NAM</td>
+		</tr>
+		<tr id="trDonvi2" >
+			<td width="50%" colspan="3" style="font:Time New Roman, Times, serif; color:Black; font-size:12; font-style:Normal; text-align:Center;"><b>TRƯỜNG&nbsp;ĐẠI&nbsp;HỌC&nbsp;LUẬT</b></td>
+			<td width="50%" colspan="3" style="font:Time New Roman, Times, serif; color:Black; font-size:12; font-style:Normal; text-align:Center;"><b>Độc&nbsp;lập&nbsp;-&nbsp;Tự&nbsp;do&nbsp;-&nbsp;Hạnh&nbsp;phúc</b></td>
+		</tr>
+		<tr id="trDongke" >
+			<td width="50%" colspan="3" style="font:Time New Roman, Times, serif; color:Black; font-size:12; font-style:Normal; text-align:Center;"></td>
+			<td width="50%" colspan="3" style="font:Time New Roman, Times, serif; color:Black; font-size:12; font-style:Normal; text-align:Center;"></td>
+		</tr>
+	</table>
+	<table border="0" width="100%" cellpadding="0" cellspacing="0">
+		<tr id="trTenbaocao">
+			<td width="100%" colspan="6" style="padding-bottom:5px; padding-top:5px; font:Time New Roman, Times, serif; color:Black; font-size:16; font-style:Bold; text-align:Center; "><b>DANH&nbsp;SÁCH&nbsp;LỚP&nbsp;CHÍNH&nbsp;THỨC&nbsp;HỌC&nbsp;KỲ&nbsp;II&nbsp;NĂM&nbsp;HỌC&nbsp;2023-2024</b></td>
+		</tr>
+	
+	</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tblHeader" id="ListHeader">
+    <tr>
+        <td colspan="6" class="none"></td>
+        <td width="30%" class="none" style="font-size:8" colspan="6">&nbsp;</td>
+    </tr>	   
+    <tr height="18">
+        <td width="10%" class="none">&nbsp;Học phần:&nbsp; </td>
+        <td width="20%" class="none" nowrap="nowrap">&nbsp;<strong>Các biện pháp phòng vệ thương mại</strong> </td>
+        <td width="15%" class="none">&nbsp;Mã lớp học phần:</td>
+        <td width="20%" class="none" nowrap="nowrap">&nbsp;<b>INL2236 K65 TMQT<b></td>
+        <td width="15%" class="none">&nbsp;Số tín chỉ:</td>
+        <td width="20%" class="none">&nbsp;2</td>
+    </tr>
+    <tr height="18">
+        <td  class="none" colspan="4">&nbsp;Thứ - Tiết:&nbsp; <b>3, 6 - 7</b></td>  
+        <td class="none">&nbsp;Giảng đường:</td>
+        <td class="none">&nbsp;P. 701 - E1</td>
+    </tr>
+</table>
+
+<table width="100%" border="1" cellpadding="0" cellspacing="0" class="tblHeader" id="ListHeader">
+    <tr bgcolor="#9CBEE7">
+        <TD align="center" width="5%"><b>STT</b></TD>
+        <TD align="center" width="10%"><b>Mã SV </b></TD>
+        <TD align="center" width="20%"><b>Họ và tên </b></TD>
+        <TD align="center" width="15%"><b>Ngày sinh </b></TD>	
+        <TD align="center" width="15%"><b>Lớp khóa học</b></TD>
+        <TD align="center" width="25%"><b>Ghi chú</b></TD>
+    </tr>
+
+
+        <tr height="22">
+            <td width="5%" align="center" >1</td>		
+            <td width="10%" >21064002</td>
+            <td width="20%" >Hoàng Thị Mai Anh</td>
+            <td width="15%" >16/11/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >2</td>		
+            <td width="10%" >18031659</td>
+            <td width="20%" >Nguyễn Minh Anh</td>
+            <td width="15%" >10/12/2000</td>              
+            <td width="15%" >K13 LH</td>
+            <td width="25%" >Học tự do</td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >3</td>		
+            <td width="10%" >21064005</td>
+            <td width="20%" >Nguyễn Thị Phương Anh</td>
+            <td width="15%" >16/02/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >4</td>		
+            <td width="10%" >21064007</td>
+            <td width="20%" >Trần Châu Anh</td>
+            <td width="15%" >29/09/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >5</td>		
+            <td width="10%" >21064009</td>
+            <td width="20%" >Trịnh Thị Vân Anh</td>
+            <td width="15%" >21/04/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >6</td>		
+            <td width="10%" >21064010</td>
+            <td width="20%" >Lê Thị Ngọc Ánh</td>
+            <td width="15%" >22/08/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >7</td>		
+            <td width="10%" >21064012</td>
+            <td width="20%" >Võ Quỳnh Chi</td>
+            <td width="15%" >21/09/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >8</td>		
+            <td width="10%" >21064014</td>
+            <td width="20%" >Nguyễn Thị Thùy Dung</td>
+            <td width="15%" >26/01/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >9</td>		
+            <td width="10%" >21064015</td>
+            <td width="20%" >Nguyễn Thùy Dung</td>
+            <td width="15%" >20/07/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >10</td>		
+            <td width="10%" >21064016</td>
+            <td width="20%" >Bùi Văn Dược</td>
+            <td width="15%" >12/08/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >11</td>		
+            <td width="10%" >21064017</td>
+            <td width="20%" >Cao Thuỳ Dương</td>
+            <td width="15%" >27/11/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >12</td>		
+            <td width="10%" >21064070</td>
+            <td width="20%" >Trương Thùy Dương</td>
+            <td width="15%" >29/08/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >13</td>		
+            <td width="10%" >20064019</td>
+            <td width="20%" >Phan Thị Khánh Đoan</td>
+            <td width="15%" >22/05/2002</td>              
+            <td width="15%" >K65LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >14</td>		
+            <td width="10%" >20064068</td>
+            <td width="20%" >Trần Hồng Đức</td>
+            <td width="15%" >14/12/2002</td>              
+            <td width="15%" >K65LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >15</td>		
+            <td width="10%" >21064018</td>
+            <td width="20%" >Huỳnh Minh Hằng</td>
+            <td width="15%" >25/07/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >16</td>		
+            <td width="10%" >20064027</td>
+            <td width="20%" >Nguyễn Thu Hiền</td>
+            <td width="15%" >15/12/2002</td>              
+            <td width="15%" >K65LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >17</td>		
+            <td width="10%" >20062017</td>
+            <td width="20%" >Hoàng Phúc Hiếu</td>
+            <td width="15%" >07/11/2002</td>              
+            <td width="15%" >K65CLC-23</td>
+            <td width="25%" >Học tự do</td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >18</td>		
+            <td width="10%" >21064020</td>
+            <td width="20%" >Hoàng Thị Thúy Hoa</td>
+            <td width="15%" >19/11/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >19</td>		
+            <td width="10%" >20064030</td>
+            <td width="20%" >Khiếu Đức Huy</td>
+            <td width="15%" >25/04/2002</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >20</td>		
+            <td width="10%" >21064025</td>
+            <td width="20%" >Nguyễn Kim Khánh</td>
+            <td width="15%" >08/01/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >21</td>		
+            <td width="10%" >21064071</td>
+            <td width="20%" >Bùi Mỹ Linh</td>
+            <td width="15%" >05/04/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >22</td>		
+            <td width="10%" >21064062</td>
+            <td width="20%" >Ngô Khánh  Linh</td>
+            <td width="15%" >31/10/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >23</td>		
+            <td width="10%" >21064029</td>
+            <td width="20%" >Nguyễn Thị Linh</td>
+            <td width="15%" >17/12/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >24</td>		
+            <td width="10%" >21064031</td>
+            <td width="20%" >Trần Mai Linh</td>
+            <td width="15%" >20/12/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >25</td>		
+            <td width="10%" >21064032</td>
+            <td width="20%" >Nguyễn Hiền Ly</td>
+            <td width="15%" >15/12/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >26</td>		
+            <td width="10%" >21064033</td>
+            <td width="20%" >Nguyễn Ánh Minh</td>
+            <td width="15%" >06/09/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >27</td>		
+            <td width="10%" >21064035</td>
+            <td width="20%" >Nguyễn Hiền Nga</td>
+            <td width="15%" >16/03/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >28</td>		
+            <td width="10%" >21064065</td>
+            <td width="20%" >Lê Bảo Ngọc</td>
+            <td width="15%" >06/10/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >29</td>		
+            <td width="10%" >21064036</td>
+            <td width="20%" >Lương Chu Bảo Ngọc</td>
+            <td width="15%" >15/11/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >30</td>		
+            <td width="10%" >21064037</td>
+            <td width="20%" >Nguyễn Minh Ngọc</td>
+            <td width="15%" >29/09/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >31</td>		
+            <td width="10%" >21064038</td>
+            <td width="20%" >Nguyễn Thị Minh Ngọc</td>
+            <td width="15%" >28/10/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >32</td>		
+            <td width="10%" >21064041</td>
+            <td width="20%" >Đặng Lan Nhi</td>
+            <td width="15%" >31/07/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >33</td>		
+            <td width="10%" >21064042</td>
+            <td width="20%" >Lê Thị Hồng Nhung</td>
+            <td width="15%" >28/11/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >34</td>		
+            <td width="10%" >21064043</td>
+            <td width="20%" >Thẩm Gia Ninh</td>
+            <td width="15%" >06/01/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >35</td>		
+            <td width="10%" >21064068</td>
+            <td width="20%" >Nguyễn Thị Phương Quỳnh</td>
+            <td width="15%" >15/09/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >36</td>		
+            <td width="10%" >21064045</td>
+            <td width="20%" >Nguyễn Thị Linh Tâm</td>
+            <td width="15%" >21/03/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >37</td>		
+            <td width="10%" >21064046</td>
+            <td width="20%" >Đinh Thị Hiếu Thảo</td>
+            <td width="15%" >26/09/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >38</td>		
+            <td width="10%" >21064049</td>
+            <td width="20%" >Nguyễn Minh Thư</td>
+            <td width="15%" >04/11/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >39</td>		
+            <td width="10%" >21064050</td>
+            <td width="20%" >Nguyễn Minh Thư</td>
+            <td width="15%" >21/12/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >40</td>		
+            <td width="10%" >21064053</td>
+            <td width="20%" >Phạm Thu Trang</td>
+            <td width="15%" >07/10/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >41</td>		
+            <td width="10%" >21064054</td>
+            <td width="20%" >Nguyễn Thị Hải Yến</td>
+            <td width="15%" >10/05/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+        <tr height="22">
+            <td width="5%" align="center" >42</td>		
+            <td width="10%" >21064055</td>
+            <td width="20%" >Trần Kim Yến</td>
+            <td width="15%" >18/04/2003</td>              
+            <td width="15%" >K66LTMQT</td>
+            <td width="25%" ></td>                
+        </tr>
+
+  </table>		
+
+	<table id="tblEndData" border="0" width="100%">
+		<tr>
+			<td colspan="6">&nbsp;</td>
+		</tr>
+
+	<tr id"trNguoilapbieu">
+		
+		<td width="30%" colspan="3" style="font:Time New Roman, Times, serif; color:Black; font-size:12; font-style:Normal; text-align:Center;"></td>
+		
+		<td width="30%" colspan="3"style="font:Time New Roman, Times, serif; color:Black; font-size:12; font-style:Italic; text-align:Center ;">Hà&nbsp;Nội,&nbsp;ngày&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tháng&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;năm&nbsp;20 </td>
+		
+	</tr>
+	<tr>
+		
+		<td width="30%" colspan="3" style="font:Time New Roman, Times, serif; color:Black; font-size:12; font-style:Normal; text-align:Center;"></td>
+		<td width="30%" colspan="3" style="font:Time New Roman, Times, serif; color:Black; font-size:12; font-style:Normal; text-align:Center;">TL.&nbsp;HIỆU&nbsp;TRƯỞNG</td>
+		<td width="5%">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="3">&nbsp;</td>
+		<td width="30%" colspan="3" style="font:Time New Roman, Times, serif; color:Black; font-size:12; font-style:Normal; text-align:Center; ">&nbsp;KT.&nbsp;TRƯỞNG&nbsp;PHÒNG&nbsp;ĐT&CTHSSV</td>
+		
+	</tr>
+
+	<tr>
+		<td colspan="6">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="6">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="6">&nbsp;</td>
+	</tr>
+	<tr>
+		
+		<td width="30%" colspan="3" style="font:Time New Roman, Times, serif; color:Black; font-size:8; font-style:Normal; text-align:Left;">&nbsp;</td>
+		<td width="30%" colspan="3" style="font:Time New Roman, Times, serif; color:Black; font-size:12; font-style:Normal; text-align:Center;">Đỗ&nbsp;Thị&nbsp;Bích&nbsp;Nguyệt</td>
+		
+	</tr>		
+</table>
