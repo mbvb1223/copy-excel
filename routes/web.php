@@ -34,6 +34,6 @@ Route::get('/bang-diem/download/{file}', [ExcelController::class, 'download']);
 Route::get('/bang-diem/download-filtered', [ExcelController::class, 'downloadFilteredFiles']);
 Route::get('/bang-diem/delete/{file}', [ExcelController::class, 'delete']);
 
-Route::get('/khien', [ExcelController::class, 'convertDanhSachDuThi']);
+Route::get('/lich-thi/convert', [ExcelController::class, 'convertDanhSachLichThi']);
 //Route::post('/bang-diem/admin', [\App\Http\Controllers\ExcelController::class, 'handleZip']);
 
