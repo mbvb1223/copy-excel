@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use RecursiveDirectoryIterator;
@@ -297,49 +298,84 @@ class ExcelController extends Controller
         $worksheet = $spreadsheet->getActiveSheet();
         $rows = $worksheet->rangeToArray("B12:I89", null, true, false, false);
 
-        foreach ($rows as $key => $value) {
-            if (true) {
-                echo $key . PHP_EOL;
+        $rows = array_map(
+            fn($row) => array_map(
+                fn($item) => trim(str_replace("\u{A0}", " ", $item)),
+                $row
+            ),
+            $rows
+        );
 
-                $data = [];
-                foreach ($value as $iter => $column_value) {
-                    $data[] = $column_value;
-                };
+        $groupByTime = collect($rows)->groupBy(fn($item) => $item[0] . "-" . $item[1]);
+//        foreach ($rows as $mon) {
+//            $this->exportDanhSachLichThi($mon);
+//        }
 
-                $reader = IOFactory::createReader("Xls");
-                $reader->setLoadAllSheets();
-//                $reader->setLoadSheetsOnly(["Học phần"]);
-//                $reader->setLoadSheetsOnly(["HP"]);
-                $reader->setLoadSheetsOnly(["Sheet1"]);
+        foreach ($groupByTime as $group) {
+            $this->exportDanhSachLichThiByGroup($group->all());
+            break;
+        }
+    }
 
-                $spreadsheet = $reader->load(public_path('/data/lich_thi/mau.xls'));
-//                $spreadsheet->getSheet(1)->setCellValue('C7', $data[3]);
-//                $spreadsheet->getSheet(1)->setCellValue('C8', $data[6]);
-//                $spreadsheet->getSheet(1)->setCellValue('C9', $data[2]);
-//                $spreadsheet->getSheet(1)->setCellValue('E8', $data[1]);
-//                $spreadsheet->getSheet(1)->setCellValue('E9', $data[0]);
-//                $spreadsheet->getSheet(1)->setTitle($data[2] . "_" . $data[6]);
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
+     */
+    private function exportDanhSachLichThiByGroup(array $data)
+    {
+        $reader = IOFactory::createReader("Xls");
+        $reader->setLoadAllSheets();
 
-                $spreadsheet->getActiveSheet()->setCellValue('C7', $data[3]);
-                $spreadsheet->getActiveSheet()->setCellValue('C8', $data[6]);
-                $spreadsheet->getActiveSheet()->setCellValue('C9', $data[2]);
-                $spreadsheet->getActiveSheet()->setCellValue('E8', $data[1]);
-                $spreadsheet->getActiveSheet()->setCellValue('E9', $data[0]);
-                $spreadsheet->getActiveSheet()->setTitle($data[2] . "_" . $data[6]);
+        $spreadsheet = $reader->load(public_path('/data/lich_thi/mau2.xls'));
 
-                $writer = new Xls($spreadsheet);
-                $data = array_map(fn($item) => trim(str_replace("\u{A0}", " ", $item)), $data);
+        foreach ($data as $item) {
+            $worksheet = clone $spreadsheet->getSheetByName('Template');
+            $this->setValuesForSheetDanhSachDuThi($worksheet, $item);
+            $spreadsheet->addSheet($worksheet);
+        }
+        $spreadsheet->removeSheetByIndex(1); // Remove template sheet
 
-                $name = str_replace("/", "-", $data[0]) . " " . trim($data[2]) . " " . trim($data[3] . " " . $data[6] . " " . $data[7]);
+        $this->saveSheetDanhSachDuThi($spreadsheet, $data[0]);
+    }
 
-                $storageDestinationPath = storage_path('app/khien5');
-                if (!File::exists($storageDestinationPath)) {
-                    File::makeDirectory($storageDestinationPath, 0755, true);
-                }
-                $path = storage_path("app/khien5/$name.xls");
-                $writer->save($path);
-            }
-        };
+    private function exportDanhSachLichThi(array $data)
+    {
+        $reader = IOFactory::createReader("Xls");
+        $reader->setLoadAllSheets();
+
+        $spreadsheet = $reader->load(public_path('/data/lich_thi/mau2.xls'));
+
+        $this->setValuesForSheetDanhSachDuThi($spreadsheet->getActiveSheet(), $data);
+
+        $this->saveSheetDanhSachDuThi($spreadsheet, $data);
+    }
+
+    private function setValuesForSheetDanhSachDuThi($sheet, $data)
+    {
+        $sheet->setCellValue('C7', $data[3]);
+        $sheet->setCellValue('C8', $data[6]);
+        $sheet->setCellValue('C9', $data[2]);
+        $sheet->setCellValue('E8', $data[1]);
+        $sheet->setCellValue('E9', $data[0]);
+        $sheet->setTitle($data[2] . "_" . $data[6]);
+
+        return $sheet;
+    }
+
+    private function saveSheetDanhSachDuThi($spreadsheet, $data)
+    {
+        $path = 'app/khien5';
+//        $data = array_map(fn($item) => trim(str_replace("\u{A0}", " ", $item)), $data);
+        $sheetName = str_replace("/", "-", $data[0]) . "_" . trim($data[1]);
+
+        $storageDestinationPath = storage_path($path);
+        if (!File::exists($storageDestinationPath)) {
+            File::makeDirectory($storageDestinationPath, 0755, true);
+        }
+
+        $path = storage_path("$path/$sheetName.xls");
+        $writer = new Xls($spreadsheet);
+        $writer->save($path);
     }
 
 //    public function uploadZip()
