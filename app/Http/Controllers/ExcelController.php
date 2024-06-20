@@ -172,13 +172,13 @@ class ExcelController extends Controller
 
     public function download(FileModel $file)
     {
-        file_put_contents(storage_path('logs/download.log'), '.', FILE_APPEND);
+        file_put_contents(storage_path('logs/download.log'), date('d/m/y H:i') . PHP_EOL, FILE_APPEND);
         return response()->download(storage_path($file->url), $file->user_file_name);
     }
 
     public function downloadAll()
     {
-        file_put_contents(storage_path('logs/downloadAll.log'), '.', FILE_APPEND);
+        file_put_contents(storage_path('logs/downloadAll.log'), date('d/m/y H:i') . PHP_EOL, FILE_APPEND);
         $path = storage_path('app/excel/files-data');
         $zip = new ZipArchive();
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
@@ -224,6 +224,7 @@ class ExcelController extends Controller
 
     public function downloadFilteredFiles(Request $request)
     {
+        file_put_contents(storage_path('logs/downloadFilteredFiles.log'), date('d/m/y H:i') . PHP_EOL, FILE_APPEND);
         $allFiles = FileModel::orderBy('name')->orderBy('code')->get();
         $files = $this->getFilteredFiles($request, $allFiles);
 
