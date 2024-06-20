@@ -172,11 +172,13 @@ class ExcelController extends Controller
 
     public function download(FileModel $file)
     {
+        file_put_contents(storage_path('logs/download.log'), '.', FILE_APPEND);
         return response()->download(storage_path($file->url), $file->user_file_name);
     }
 
     public function downloadAll()
     {
+        file_put_contents(storage_path('logs/downloadAll.log'), '.', FILE_APPEND);
         $path = storage_path('app/excel/files-data');
         $zip = new ZipArchive();
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
