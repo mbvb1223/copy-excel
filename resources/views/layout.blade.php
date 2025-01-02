@@ -17,7 +17,7 @@
     <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../assets/dist/css//jumbotron.css" rel="stylesheet">
+    <link href="../assets/dist/css/jumbotron.css" rel="stylesheet">
 </head>
 
 <body data-new-gr-c-s-check-loaded="14.1126.0" data-gr-ext-installed="">
