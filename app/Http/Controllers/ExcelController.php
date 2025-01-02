@@ -236,10 +236,10 @@ class ExcelController extends Controller
         }
         /** @var FileModel $file */
         foreach ($files as $file) {
-            $zip->addFile(
-                storage_path($file->url),
-                $file->user_file_name
-            );
+//            $zip->addFile(
+//                storage_path($file->url),
+//                $file->user_file_name
+//            );
         }
         $zip->close();
 
@@ -293,17 +293,19 @@ class ExcelController extends Controller
 
     public function convertDanhSachLichThi()
     {
+        set_time_limit(300);
+
         $reader = IOFactory::createReader("Xlsx");
         $reader->setLoadSheetsOnly(["Sheet 1"]);
         $reader->setReadDataOnly(true);
 
         $spreadsheet = $reader->load(public_path('/data/lich_thi/lich_thi.xlsx'));
         $worksheet = $spreadsheet->getActiveSheet();
-        $rows = $worksheet->rangeToArray("B12:I89", null, true, false, false);
+        $rows = $worksheet->rangeToArray("B12:I398", null, true, false, false);
 
         $rows = array_map(
             fn($row) => array_map(
-                fn($item) => trim(str_replace("\u{A0}", " ", $item)),
+                fn($item) => trim(str_replace("\u{A0}", "", $item)),
                 $row
             ),
             $rows
@@ -314,9 +316,19 @@ class ExcelController extends Controller
 //            $this->exportDanhSachLichThi($mon);
 //        }
 
+        echo "TOTAL: " . $groupByTime->count() . PHP_EOL;
+        flush();
+        ob_flush();
+        $i = 0;
         foreach ($groupByTime as $group) {
+//            if (!($i >= 60 and $i < 70)) {
+//                $i++;
+//                continue;
+//            }
             $this->exportDanhSachLichThiByGroup($group->all());
-            break;
+            echo "DONE: " . ++$i . PHP_EOL;
+            flush();
+            ob_flush();
         }
     }
 
@@ -330,7 +342,6 @@ class ExcelController extends Controller
         $reader->setLoadAllSheets();
 
         $spreadsheet = $reader->load(public_path('/data/lich_thi/mau2.xls'));
-
         foreach ($data as $item) {
             $worksheet = clone $spreadsheet->getSheetByName('Template');
             $this->setValuesForSheetDanhSachDuThi($worksheet, $item);
@@ -339,6 +350,7 @@ class ExcelController extends Controller
         $spreadsheet->removeSheetByIndex(1); // Remove template sheet
 
         $this->saveSheetDanhSachDuThi($spreadsheet, $data[0]);
+        $worksheet->disconnectCells();
     }
 
     private function exportDanhSachLichThi(array $data)
@@ -367,7 +379,7 @@ class ExcelController extends Controller
 
     private function saveSheetDanhSachDuThi($spreadsheet, $data)
     {
-        $path = 'app/khien5';
+        $path = 'app/khien6';
 //        $data = array_map(fn($item) => trim(str_replace("\u{A0}", " ", $item)), $data);
         $sheetName = str_replace("/", "-", $data[0]) . "_" . trim($data[1]);
 
@@ -378,6 +390,7 @@ class ExcelController extends Controller
 
         $path = storage_path("$path/$sheetName.xls");
         $writer = new Xls($spreadsheet);
+//        $writer->setPreCalculateFormulas(false);
         $writer->save($path);
     }
 

@@ -37,3 +37,5 @@ Route::get('/bang-diem/delete/{file}', [ExcelController::class, 'delete']);
 Route::get('/lich-thi/convert', [ExcelController::class, 'convertDanhSachLichThi']);
 //Route::post('/bang-diem/admin', [\App\Http\Controllers\ExcelController::class, 'handleZip']);
 
+
+Route::get('/test', [\App\Http\Controllers\TestController::class, 'index']);
