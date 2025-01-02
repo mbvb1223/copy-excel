@@ -15,10 +15,10 @@ set('repository', 'git@github.com:mbvb1223/copy-excel.git');
 
 // Hosts
 
-host('175.41.177.242')
+host('3.0.189.57')
     ->set('remote_user', 'ubuntu')
     ->set('branch', 'master')
-    ->set('identity_file', '../2024.pem')
+    ->set('identity_file', '../2025.pem')
     ->set('deploy_path', '~/{{application}}');
 
 desc('Deploys your project');
