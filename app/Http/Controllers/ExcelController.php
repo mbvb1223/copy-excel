@@ -137,7 +137,7 @@ class ExcelController extends Controller
         $reader = IOFactory::createReader("Xls");
         $reader->setLoadSheetsOnly(["Sheet 1"]);
 
-        $spreadsheet = $reader->load(public_path('/data/example.xls'));
+        $spreadsheet = $reader->load(public_path('/data/bang_diem/template.xls'));
         $spreadsheet->getActiveSheet()->setCellValue('C6', $info['hoc_phan']);
         $spreadsheet->getActiveSheet()->setCellValue('J6', $info['ma_lop']);
         $spreadsheet->getActiveSheet()->setCellValue('C7', $info['thu_tiet']);
