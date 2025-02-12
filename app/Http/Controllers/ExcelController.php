@@ -57,13 +57,13 @@ class ExcelController extends Controller
 
             foreach ($files as $file) {
                 list($info, $path) = $this->exe(File::get($file), $folder);
-                $this->updateFile($info, $path);
+                $this->saveToDb($info, $path);
             }
 
             File::deleteDirectory($storageDestinationPath);
         } else {
             list($info, $path) = $this->exe(File::get($request->file("file")), $folder);
-            $this->updateFile($info, $path);
+            $this->saveToDb($info, $path);
         }
 
         return redirect()->to('/bang-diem/search?admin=khien');
@@ -138,6 +138,7 @@ class ExcelController extends Controller
         $reader->setLoadSheetsOnly(["Sheet 1"]);
 
         $spreadsheet = $reader->load(public_path('/data/bang_diem/template.xls'));
+        $spreadsheet->getActiveSheet()->setCellValue('A4', "BẢNG ĐIỂM KIỂM TRA HỌC KỲ ". trim($info['semester']) . " NĂM HỌC {$info['year']}");
         $spreadsheet->getActiveSheet()->setCellValue('C6', $info['hoc_phan']);
         $spreadsheet->getActiveSheet()->setCellValue('J6', $info['ma_lop']);
         $spreadsheet->getActiveSheet()->setCellValue('C7', $info['thu_tiet']);
@@ -451,7 +452,7 @@ class ExcelController extends Controller
             ->when($request['semester'], fn($query) => $query->where('semester', $request['semester']));
     }
 
-    private function updateFile(array $info, string $path): void
+    private function saveToDb(array $info, string $path): void
     {
         FileModel::updateOrCreate([
             'name' => $info['hoc_phan'],
