@@ -69,6 +69,14 @@
                     </button>
                 </a>
                 @endif
+                @if($files->all() && request('admin') == 'khien')
+                    <a href="/bang-diem/truncate" onclick="
+                    if (!confirm('Are you sure?')) {
+                        return false;
+                    }">
+                        <button type="button" class="btn btn-danger">Xoá hết</button>
+                    </a>
+                @endif
             </th>
         </tr>
         </thead>

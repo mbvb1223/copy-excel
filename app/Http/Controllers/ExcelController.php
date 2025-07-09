@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
@@ -173,13 +174,13 @@ class ExcelController extends Controller
 
     public function download(FileModel $file)
     {
-        file_put_contents(storage_path('logs/download.log'), date('d/m/y H:i') . PHP_EOL, FILE_APPEND);
+//        file_put_contents(storage_path('logs/download.log'), date('d/m/y H:i') . PHP_EOL, FILE_APPEND);
         return response()->download(storage_path($file->url), $file->user_file_name);
     }
 
     public function downloadAll()
     {
-        file_put_contents(storage_path('logs/downloadAll.log'), date('d/m/y H:i') . PHP_EOL, FILE_APPEND);
+//        file_put_contents(storage_path('logs/downloadAll.log'), date('d/m/y H:i') . PHP_EOL, FILE_APPEND);
         $path = storage_path('app/excel/files-data');
         $zip = new ZipArchive();
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
@@ -225,7 +226,7 @@ class ExcelController extends Controller
 
     public function downloadFilteredFiles(Request $request)
     {
-        file_put_contents(storage_path('logs/downloadFilteredFiles.log'), date('d/m/y H:i') . PHP_EOL, FILE_APPEND);
+//        file_put_contents(storage_path('logs/downloadFilteredFiles.log'), date('d/m/y H:i') . PHP_EOL, FILE_APPEND);
         $allFiles = FileModel::orderBy('name')->orderBy('code')->get();
         $files = $this->getFilteredFiles($request, $allFiles);
 
@@ -251,6 +252,18 @@ class ExcelController extends Controller
     {
         File::delete(storage_path($file->url));
         $file->delete();
+        return redirect()->back();
+    }
+
+    public function truncate()
+    {
+        $files = FileModel::all();
+        foreach ($files as $file) {
+            File::delete(storage_path($file->url));
+            $file->delete();
+        }
+        DB::table('files')->truncate();
+
         return redirect()->back();
     }
 
