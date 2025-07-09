@@ -33,7 +33,7 @@ Route::get('/bang-diem/search', [ExcelController::class, 'search']);
 Route::get('/bang-diem/download/{file}', [ExcelController::class, 'download']);
 Route::get('/bang-diem/download-filtered', [ExcelController::class, 'downloadFilteredFiles']);
 Route::get('/bang-diem/delete/{file}', [ExcelController::class, 'delete']);
-Route::get('/bang-diem/truncate', [ExcelController::class, 'truncate']);
+Route::get('/bang-diem/delete-multiple', [ExcelController::class, 'deleteBySearch']);
 
 Route::get('/lich-thi/convert', [ExcelController::class, 'convertDanhSachLichThi']);
 //Route::post('/bang-diem/admin', [\App\Http\Controllers\ExcelController::class, 'handleZip']);

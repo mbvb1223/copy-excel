@@ -255,14 +255,15 @@ class ExcelController extends Controller
         return redirect()->back();
     }
 
-    public function truncate()
+    public function deleteBySearch(Request $request)
     {
-        $files = FileModel::all();
+        $allFiles = FileModel::orderBy('name')->orderBy('code')->get();
+
+        $files = $this->getFilteredFiles($request, $allFiles);
         foreach ($files as $file) {
             File::delete(storage_path($file->url));
             $file->delete();
         }
-        DB::table('files')->truncate();
 
         return redirect()->back();
     }

@@ -70,7 +70,7 @@
                 </a>
                 @endif
                 @if($files->all() && request('admin') == 'khien')
-                    <a href="/bang-diem/truncate" onclick="
+                    <a href="/bang-diem/delete-multiple?{{request()->getQueryString()}}" onclick="
                     if (!confirm('Are you sure?')) {
                         return false;
                     }">
